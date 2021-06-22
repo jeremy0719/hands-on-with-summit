@@ -21,6 +21,8 @@ $ module list
 
 ```
 
+[xiaobin0719@login1.ascent Basic_Workflow]$ module list
+
 Currently Loaded Modules:
   1) lsf-tools/2.0   2) DefApps   3) pgi/19.9   4) spectrum-mpi/10.3.1.2-20200121
 
@@ -38,6 +40,20 @@ For this example program, we will use the PGI compiler. To use the PGI compiler,
 $ module load pgi
 ```
 
+
+````
+[xiaobin0719@login1.ascent Basic_Workflow]$ module load pgi
+
+Lmod is automatically replacing "xl/16.1.1-7" with "pgi/19.9".
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) spectrum-mpi/10.3.1.2-20200121
+
+
+````
+
+
 ## Step 2: Compile the Code
 
 Now that you've set up your programming environment for the code used in this challenge, you can go ahead and compile the code. First, make sure you're in the `Basic_Workflow/` directory:
@@ -49,6 +65,28 @@ $ cd ~/hands-on-with-summit/challenges/Basic_Workflow
 > NOTE: The path above assumes you cloned the repo in your `/ccsopen/home/username` directory.
 
 Then compile the code. To do so, you'll use the provided `Makefile`, which is a file containing the set of commands to automate the compilation process. To use the `Makefile`, issue the following command:
+
+```
+[xiaobin0719@login1.ascent Basic_Workflow]$ cat Makefile
+CCOMP = pgcc
+CFLAGS =
+
+run: vector_addition.o
+	$(CCOMP) $(CFLAGS) vector_addition.o -o run
+
+vector_addition.o: vector_addition.c
+	$(CCOMP) $(CFLAGS) -c vector_addition.c
+
+.PHONY: clean cleanall
+
+clean:
+	rm -f run *.o
+
+cleanall:
+	rm -f run *.o add_vec_cpu*
+```
+
+
 
 ```
 $ make
@@ -68,6 +106,18 @@ To submit and run the job, issue the following command:
 $ bsub submit.lsf
 ```
 
+
+````
+[xiaobin0719@login1.ascent Basic_Workflow]$ bsub submit.lsf
+Job <63584> is submitted to default queue <batch>.
+
+````
+
+
+
+
+
+
 ## Monitoring Your Job
 
 Now that the job has been submitted, you can monitor its progress. Is it running yet? Has it finished? To find out, you can issue the command 
@@ -76,5 +126,50 @@ Now that the job has been submitted, you can monitor its progress. Is it running
 $ jobstat -u USERNAME
 ```
 
+
+
+
+
 where `USERNAME` is your username. This will show you the state of your job to determine if it's running, eligible (waiting to run), or blocked. When you no longer see your job listed with this command, you can assume it has finished (or crashed). Once it has finished, you can see the output from the job in the file named `add_vec_cpu.JOBID`, where `JOBID` is the unique ID given to you job when you submitted it. You can confirm that it gave the correct results by looking for `__SUCCESS__` in the output file. 
 
+
+````
+
+[xiaobin0719@login1.ascent Basic_Workflow]$ jobstat -u xiaobin0719
+compute-hm: Bad host name, host group name or cluster name
+-------------------------------------- Running Jobs: 1 (batch: 1/15=6.67% + batch-hm: 0/0) ---------------------------------------
+JobID      User       Queue    Project    Nodes Remain     StartTime       JobName
+63584      xiaobin0719 batch    GEN158     1     9:48       06/21 20:28:42  add_vec_cpu
+-------------------------------------------------------- Eligible Jobs: 0 --------------------------------------------------------
+-------------------------------------------------------- Blocked Jobs: 0 ---------------------------------------------------------
+
+````
+
+
+````
+
+
+[xiaobin0719@login1.ascent Basic_Workflow]$ cat add_vec_cpu.63584
+Mon Jun 21 20:29:00 EDT 2021
+
+---------------------------
+__SUCCESS__
+---------------------------
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@login1>
+Subject: Job 63584: <add_vec_cpu> in cluster <ascent> Done
+
+Job <add_vec_cpu> was submitted from host <login1> by user <xiaobin0719> in cluster <ascent> at Mon Jun 21 20:28:42 2021
+Job was executed on host(s) <1*login1>, in queue <batch>, as user <xiaobin0719> in cluster <ascent> at Mon Jun 21 20:28:42 2021
+                            <42*h49n15>
+</ccsopen/home/xiaobin0719> was used as the home directory.
+</ccsopen/home/xiaobin0719/hands-on-with-summit/challenges/Basic_Workflow> was used as the working directory.
+Started at Mon Jun 21 20:28:42 2021
+Terminated at Mon Jun 21 20:29:05 2021
+Results reported at Mon Jun 21 20:29:05 2021
+
+The output (if any) is above this job summary.
+
+
+````

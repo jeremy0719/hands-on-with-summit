@@ -39,6 +39,21 @@ Then you compile the `matrix_sums_unoptimized.cu` code with
 $ make unoptimized
 ```
 
+```
+
+
+CUDA Kernel Statistics:
+
+ Time(%)  Total Time (ns)  Instances   Average   Minimum  Maximum  StdDev                        Name
+ -------  ---------------  ---------  ---------  -------  -------  ------  ------------------------------------------------
+    71.2          3316900          1  3316900.0  3316900  3316900     0.0  row_sums(float const*, float*, unsigned long)
+    28.8          1341877          1  1341877.0  1341877  1341877     0.0  column_sums(float const*, float*, unsigned long)
+
+
+
+```
+
+
 This will create a binary called `matrix_sums_unoptimized` in the directory.
 
 ## Step 2: Run the program
@@ -48,6 +63,24 @@ Once you've succesfully compiled, submit the batch script.
 ```
 $ bsub submit_unoptimized.lsf
 ```
+
+```
+
+
+CUDA Kernel Statistics:
+
+ Time(%)  Total Time (ns)  Instances   Average   Minimum  Maximum  StdDev                        Name
+ -------  ---------------  ---------  ---------  -------  -------  ------  ------------------------------------------------
+    50.2          1348404          1  1348404.0  1348404  1348404     0.0  column_sums(float const*, float*, unsigned long)
+    49.8          1337236          1  1337236.0  1337236  1337236     0.0  row_sums(float const*, float*, unsigned long)
+
+
+
+
+
+```
+
+
 
 If you look inside the batch script, you will see that the program is being run with the
 Nsight Systems profiler `nsys profile`. This starts the profiler and attaches it to the

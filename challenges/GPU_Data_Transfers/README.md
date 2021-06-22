@@ -45,6 +45,42 @@ Then, compile the code:
 ```c
 $ make
 ```
+````
+[xiaobin0719@login1.ascent GPU_Data_Transfers]$ make
+nvcc  -c vector_addition.cu
+nvcc  vector_addition.o -o run
+````
+
+````
+[xiaobin0719@login1.ascent GPU_Data_Transfers]$ cat add_vec_cuda.63704
+Tue Jun 22 11:18:25 EDT 2021
+
+---------------------------
+__SUCCESS__
+---------------------------
+N                 = 1048576
+Threads Per Block = 256
+Blocks In Grid    = 4096
+---------------------------
+
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@login1>
+Subject: Job 63704: <add_vec_cuda> in cluster <ascent> Done
+
+Job <add_vec_cuda> was submitted from host <login1> by user <xiaobin0719> in cluster <ascent> at Tue Jun 22 11:18:07 2021
+Job was executed on host(s) <1*login1>, in queue <batch>, as user <xiaobin0719> in cluster <ascent> at Tue Jun 22 11:18:07 2021
+                            <42*h49n15>
+</ccsopen/home/xiaobin0719> was used as the home directory.
+</ccsopen/home/xiaobin0719/hands-on-with-summit/challenges/GPU_Data_Transfers> was used as the working directory.
+Started at Tue Jun 22 11:18:07 2021
+Terminated at Tue Jun 22 11:18:30 2021
+Results reported at Tue Jun 22 11:18:30 2021
+
+The output (if any) is above this job summary.
+````
+
+
 
 If the code compiles, try to run it as shown below. If not, read the compilation errors and try to determine what went wrong.
 

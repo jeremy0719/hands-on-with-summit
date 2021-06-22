@@ -108,6 +108,33 @@ Now we're ready to run! To do so, issue the command:
 bsub submit.lsf
 ```
 
+```
+[xiaobin0719@login1.ascent hello_world]$ cat hello_test.63761
+Tue Jun 22 12:29:52 EDT 2021
+
+OpenMP thread 000 of 004 ran on virtual core 000
+OpenMP thread 002 of 004 ran on virtual core 008
+OpenMP thread 003 of 004 ran on virtual core 012
+OpenMP thread 001 of 004 ran on virtual core 004
+
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@login1>
+Subject: Job 63761: <hello_test> in cluster <ascent> Done
+
+Job <hello_test> was submitted from host <login1> by user <xiaobin0719> in cluster <ascent> at Tue Jun 22 12:29:33 2021
+Job was executed on host(s) <1*login1>, in queue <batch>, as user <xiaobin0719> in cluster <ascent> at Tue Jun 22 12:29:33 2021
+                            <42*h49n02>
+</ccsopen/home/xiaobin0719> was used as the home directory.
+</ccsopen/home/xiaobin0719/hands-on-with-summit/challenges/OpenMP_Basics/hello_world> was used as the working directory.
+Started at Tue Jun 22 12:29:33 2021
+Terminated at Tue Jun 22 12:29:57 2021
+Results reported at Tue Jun 22 12:29:57 2021
+
+The output (if any) is above this job summary.
+
+```
+
+
 You can view the status of your job with the `jobstat -u USERNAME` command. While you're waiting for the job to finish, take a look at the `submit.lsf` script you used to submit your job. The environment variable `OMP_NUM_THREADS` can be used to set the number of OpenMP threads to be spawned in the parallel region. It's currently set to 4, but you can change it and re-run to see the results from different numbers of OpenMP threads.
 
 Once your job is complete, you should have a file called `hello_test.JOBID`, where `JOBID` is the unique ID assigned to your job. This file will include the date, the output from the program, and some basic information about the job itself (below the dashed horizontal line). The program output should look something like this:

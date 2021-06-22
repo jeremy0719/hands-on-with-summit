@@ -17,6 +17,14 @@ We won't be submitting any new jobs here, but rather looking at others that have
 
 2. How many unique users did the jobs from question 1 belong to?
 
+
+```
+
+bhist -C 2021/06/01/00:00,2021/06/15/23:59 -u all
+
+```
+
+
 ### BONUS!
 3. Of the jobs found in question 1, what's the job ID of the longest running job?
     1. How long was it pending (pre-execution), and how long did it run (actual execution time)?
